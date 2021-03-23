@@ -30,18 +30,28 @@ def main():
     # Why not start by trying to print this configuration out using the
     # `print_board` helper function? (See the `util.py` source code for
     # usage information).
-    board_dict = {
-        
-    }
+
     game = Board()
     Upper = []
     Lower = []
     Blocks = []
     for i in data['upper']:
-        Upper.append((MyNode(i[0],"upper",tuple((i[1],i[2])))))
-        game.grid[i[1]+4, i[2]+4].card =         
+        Upper.append((MyNode(i[0],"upper",tuple((i[1],i[2])),game)))   
     for i in data['lower']:
-        Lower.append((MyNode(i[0],"lower",tuple((i[1],i[2])))))
+        Lower.append((MyNode(i[0],"lower",tuple((i[1],i[2])),game)))
     for i in data['block']: 
-        Blocks.append((MyNode(i[0],"block",tuple((i[1],i[2])))))
-    #print_board(board_dict, "message goes here", ansi=False)
+        Blocks.append((MyNode(i[0],"block",tuple((i[1],i[2])),game)))
+    
+
+    """print the board"""
+    board_dict = {
+        
+    }
+    Allcards = []
+    Allcards = Allcards + Upper + Lower + Blocks
+    for i in Allcards:
+        board_dict[i.coordinate] = i.role 
+    print_board(board_dict, "message goes here", ansi=False)
+
+    Upper[0].Move((tuple((3,1))),game)
+

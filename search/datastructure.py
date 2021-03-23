@@ -5,10 +5,13 @@ this file defines all the datastrues will be used in the assignment
 
 #The cards players have
 class MyNode:
-    def __init__(self, role,side,coordinate):
+    def __init__(self, role,side,coordinate,board):
+        # 0 = paper; 1 = siser; 2 = stone, 3= rock
         self.role = role
+        # upper/ lower/ Neutral
         self.side = side
         self.coordinate = coordinate
+        board.addtoboard(self)
     
     def getside(self):
         return self.side
@@ -19,7 +22,8 @@ class MyNode:
     def NodeImfo(self):
         print("Coordinate: " + self.coordinate + " role: " +self.role + "side: " + self.side)
     
-    def Move(self, NewCoordinate):
+    def Move(self, NewCoordinate,board):
+        board.moveOnboard(self,NewCoordinate)
         self.coordinate =  NewCoordinate
     
     def getx(self):
@@ -66,14 +70,20 @@ class Board:
                     (self.grid[r+4][q+4]).surrounding.append(self.grid[r+3][q+5])
                 if(r in ran and q+1 in ran and -(r)-(q+1) in ran):
                     (self.grid[r+4][q+4]).surrounding.append(self.grid[r+4][q+5])
+    
+    def addtoboard(self, card):
+        self.grid[card.getx()][card.gety()].cards.append(card)
 
+    def moveOnboard(self,card,Newcoordinate):
+        self.grid[card.getx()][card.gety()].cards.remove(card)
+        self.grid[Newcoordinate[0] + 4][Newcoordinate[1] + 4].cards.append(card)
 
 class grid:
     
     def __init__(self, coordinate):
         self.surrounding = []
         self.coordinate = coordinate
-        self.card = None
+        self.cards = []
 
     def PrintAGrid(self):
         print(self.coordinate,end='')
