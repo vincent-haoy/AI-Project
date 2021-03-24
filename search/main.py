@@ -16,6 +16,7 @@ import json
 # then import from them like this:
 from search.util import print_board, print_slide, print_swing
 from search.datastructure import *
+from search.SearchingAlgorithm import *
 def main():
     try:
         with open(sys.argv[1]) as file:
@@ -42,8 +43,13 @@ def main():
     for i in data['block']: 
         Blocks.append((MyNode(i[0],"block",tuple((i[1],i[2])),game)))
     
-
-    """print the board"""
+    
+    turn = 0
+    while(Upper[0].coordinate != Lower[0].coordinate):
+        RunDFSOnCards(Upper[0], Lower[0], game, turn)
+        turn+=1
+    
+    """
     board_dict = {
         
     }
@@ -52,6 +58,4 @@ def main():
     for i in Allcards:
         board_dict[i.coordinate] = i.role 
     print_board(board_dict, "message goes here", ansi=False)
-
-    Upper[0].Move((tuple((3,1))),game)
-
+    """

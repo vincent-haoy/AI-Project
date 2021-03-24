@@ -20,7 +20,7 @@ class MyNode:
         return self.role
 
     def NodeImfo(self):
-        print("Coordinate: " + self.coordinate + " role: " +self.role + "side: " + self.side)
+        print("Coordinate: " + str(self.coordinate) + " role: " + str(self.role) + "  side: " + self.side)
     
     def Move(self, NewCoordinate,board):
         board.moveOnboard(self,NewCoordinate)
@@ -91,3 +91,7 @@ class grid:
         for i in self.surrounding:
             print(i.coordinate,end='')
             print(", ",end = '')
+    def getx(self):
+        return (self.coordinate[0]+4)
+    def gety(self):
+        return (self.coordinate[1]+4)
