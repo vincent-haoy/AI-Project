@@ -32,6 +32,20 @@ class MyNode:
     def gety(self):
         return self.coordinate[1] + 4
 
+    def ResistanceOpponentRole(self):
+        if(self.role == 'p'):
+            return 's'
+        if(self.role == 's'):
+            return 'r'
+        if(self.role == 'r'):
+            return 'p'
+    def WantedOpponentRole(self):
+        if(self.role == 'p'):
+            return 'r'
+        if(self.role == 's'):
+            return 'p'
+        if(self.role == 'r'):
+            return 's'        
 # A singeleton board
 class Board:
     __instance = None
@@ -77,6 +91,10 @@ class Board:
     def moveOnboard(self,card,Newcoordinate):
         self.grid[card.getx()][card.gety()].cards.remove(card)
         self.grid[Newcoordinate[0] + 4][Newcoordinate[1] + 4].cards.append(card)
+    
+    def deleOnboard(self,card):
+        self.grid[card.getx()][card.gety()].cards.remove(card)
+
 
 class grid:
     
@@ -85,12 +103,6 @@ class grid:
         self.coordinate = coordinate
         self.cards = []
 
-    def PrintAGrid(self):
-        print(self.coordinate,end='')
-    def PrintSurroundings(self):
-        for i in self.surrounding:
-            print(i.coordinate,end='')
-            print(", ",end = '')
     def getx(self):
         return (self.coordinate[0]+4)
     def gety(self):

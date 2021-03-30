@@ -33,29 +33,60 @@ def main():
     # usage information).
 
     game = Board()
+    #stage1
     Upper = []
-    Lower = []
     Blocks = []
+    #stage2    
+    Upper_p = []
+    Upper_s = []
+    Upper_r = []
+    #stage3
+    Lower_p = []
+    Lower_s = []
+    Lower_r = []
+    Lower = [] 
+    board_dict ={
+
+    }
+
     for i in data['upper']:
+        board_dict[tuple((i[1],i[2]))] = i[0]
         Upper.append((MyNode(i[0],"upper",tuple((i[1],i[2])),game)))   
     for i in data['lower']:
+        board_dict[tuple((i[1],i[2]))] = i[0]
         Lower.append((MyNode(i[0],"lower",tuple((i[1],i[2])),game)))
+        """
+        if(i[0] == "p"):
+            Lower_p.append((MyNode(i[0],"lower",tuple((i[1],i[2])),game)))
+        elif(i[0] == "s"):
+            Lower_s.append((MyNode(i[0],"lower",tuple((i[1],i[2])),game)))
+        elif(i[0] == "r"):
+            Lower_r.append((MyNode(i[0],"lower",tuple((i[1],i[2])),game)))
+        """            
     for i in data['block']: 
-        Blocks.append((MyNode(i[0],"block",tuple((i[1],i[2])),game)))
-    
-    
-    turn = 0
-    while(Upper[0].coordinate != Lower[0].coordinate):
-        RunDFSOnCards(Upper[0], Lower[0], game, turn)
-        turn+=1
-    
-    """
-    board_dict = {
-        
+        board_dict[tuple((i[1],i[2]))] = 'b'
+        Blocks.append((MyNode("b","block",tuple((i[1],i[2])),game)))
+    #move dict for the next move:
+    move_dic = {
+
     }
-    Allcards = []
-    Allcards = Allcards + Upper + Lower + Blocks
-    for i in Allcards:
-        board_dict[i.coordinate] = i.role 
-    print_board(board_dict, "message goes here", ansi=False)
-    """
+    turn = 1
+    print_board(board_dict)
+    while(len(Lower)>0):
+
+        for current_card in Upper:
+            nextpoint = RunDFSOnCards(current_card, game, turn)
+            if nextpoint is not None:
+                move_dic[current_card] = nextpoint
+            else:
+                print("didnt find")
+                continue
+
+        for key in move_dic.keys():
+            printMove(turn,key,move_dic[key])
+            key.Move(move_dic[key],game)
+        
+        for key in list(move_dic.keys()):   
+            settlement(move_dic[key],game,Upper,Lower,move_dic)
+        turn+=1
+#python -m search search/1v2.json

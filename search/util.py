@@ -26,7 +26,7 @@ def print_swing(t, r_a, q_a, r_b, q_b, **kwargs):
     print(f"Turn {t}: SWING from {(r_a, q_a)} to {(r_b, q_b)}", **kwargs)
 
 
-def print_board(board_dict, message="", compact=True, ansi=False, **kwargs):
+def print_board(board_dict, message="", compact=False, ansi=False, **kwargs):
     """
     For help with visualisation and debugging: output a board diagram with
     any information you like (tokens, heuristic values, distances, etc.).
@@ -143,7 +143,7 @@ def print_board(board_dict, message="", compact=True, ansi=False, **kwargs):
                 # put contents in bold
                 cell = f"\033[1m{cell}\033[0m"
         else:
-            cell = "     " # 5 spaces will fill a cell
+            cell =  "     " # 5 spaces will fill a cell
         cells.append(cell)
     # prepare the message, formatted across multiple lines
     multiline_message = "\n# ".join(message.splitlines())
