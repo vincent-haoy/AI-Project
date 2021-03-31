@@ -146,16 +146,23 @@ def main():
                 no_targets.remove(no_target)
                 continue
             else:
-                g = random.randint(0,len(acceptable_list)-1)
-                move_dic[no_target] = acceptable_list[g]
-                no_targets.remove(no_target)
+                print(len(acceptable_list))
+                if len(acceptable_list) > 0:
+                    g = random.randint(0,len(acceptable_list)-1)
+                    move_dic[no_target] = acceptable_list[g]
+                    no_targets.remove(no_target)
+                elif len(suicide_list) > 0:
+                    move_dic[no_target] = suicide_list[0]
+                    no_targets.remove(no_target) 
                 continue
 
         for key in move_dic.keys():
             printMove(turn,key,move_dic[key])
             key.Move(move_dic[key],game)
         
-        for key in list(move_dic.keys()):   
+        for key in list(move_dic.keys()):
+            if key not in list(move_dic.keys()):
+                continue
             settlement(move_dic[key],game,Upper,Lower,move_dic)
         turn+=1
     
